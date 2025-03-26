@@ -7,11 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GildedRoseTest {
 
     @Test
-    void foo() {
-        Item[] items = new Item[] { new Item("foo", 0, 0) };
+    void fooOld() {
+        Item[] items = new Item[] { new Item("foo", 0, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
+        assertEquals(3, app.items[0].quality);
+        assertEquals(-1, app.items[0].sellIn);
+    }
+
+    @Test
+    void fooTooOld() {
+        Item[] items = new Item[] { new Item("foo", -1, 15) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("foo", app.items[0].name);
+        assertEquals(13, app.items[0].quality);
+        assertEquals(-2, app.items[0].sellIn);
     }
 
     @Test
@@ -24,5 +36,58 @@ class GildedRoseTest {
         assertEquals(0, app.items[0].sellIn);
     }
 
+    @Test
+    void testLegendaryAndNormal() {
+        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 0, 80), new Item("foo", 15, 15) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].name);
+        assertEquals(80, app.items[0].quality);
+        assertEquals(0, app.items[0].sellIn);
+        assertEquals("foo", app.items[1].name);
+        assertEquals(14, app.items[1].quality);
+        assertEquals(14, app.items[1].sellIn);
+    }
+
+
+    @Test
+    void testBrie() {
+        Item[] items = new Item[] { new Item("Aged Brie", 30, 30), new Item("foo", 15, 15) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Aged Brie", app.items[0].name);
+        assertEquals(31, app.items[0].quality);
+        assertEquals(29, app.items[0].sellIn);
+        assertEquals("foo", app.items[1].name);
+        assertEquals(14, app.items[1].quality);
+        assertEquals(14, app.items[1].sellIn);
+    }
+
+    @Test
+    void testBackstage() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 30, 30), new Item("Backstage passes to a TAFKAL80ETC concert", 8, 30), new Item("Backstage passes to a TAFKAL80ETC concert", 3, 30) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
+        assertEquals(31, app.items[0].quality);
+        assertEquals(29, app.items[0].sellIn);
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[1].name);
+        assertEquals(32, app.items[1].quality);
+        assertEquals(7, app.items[1].sellIn);
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[2].name);
+        assertEquals(33, app.items[2].quality);
+        assertEquals(2, app.items[2].sellIn);
+    }
+
+
+    /*@Test  Not currently implemented
+    void testConjured() {
+        Item[] items = new Item[] { new Item("Conjured", 30, 30) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Conjured", app.items[0].name);
+        assertEquals(28, app.items[0].quality);
+        assertEquals(29, app.items[0].sellIn);
+    }*/
 
 }
