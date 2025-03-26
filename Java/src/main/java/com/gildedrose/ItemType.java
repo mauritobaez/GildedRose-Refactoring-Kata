@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.items.Item;
+
 public enum ItemType {
     REGULAR,
     AGED_BRIE,

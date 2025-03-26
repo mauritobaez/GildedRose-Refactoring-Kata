@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.items.Item;
+
 public class Context {
 
     private Strategy strategy = null;
