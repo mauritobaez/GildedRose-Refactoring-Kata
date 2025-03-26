@@ -149,12 +149,18 @@ class GildedRoseTest {
     @Test
     void testConjured() {
         Factory fact = new ConjuredFactory();
-        Item[] items = new Item[] { fact.createItem( 30, 30) };
+        Item[] items = new Item[] {
+            fact.createItem( 30, 30),
+            fact.createItem(-2, 20)
+        };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(CONJURED_NAME, app.items[0].name);
         assertEquals(28, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
+        assertEquals(CONJURED_NAME, app.items[1].name);
+        assertEquals(16, app.items[1].quality);
+        assertEquals(-3, app.items[1].sellIn);
     }
 
 }
