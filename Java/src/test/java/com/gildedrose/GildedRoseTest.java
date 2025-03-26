@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.factories.Factory;
+import com.gildedrose.factories.RegularFactory;
 import com.gildedrose.items.*;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +11,8 @@ class GildedRoseTest {
 
     @Test
     void fooOld() {
-        Item[] items = new Item[] { new RegularItem("foo", 0, 5) };
+        Factory fact = new RegularFactory("foo");
+        Item[] items = new Item[] { fact.createItem(0, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
@@ -19,7 +22,8 @@ class GildedRoseTest {
 
     @Test
     void fooTooOld() {
-        Item[] items = new Item[] { new RegularItem("foo", -1, 15) };
+        Factory fact = new RegularFactory("foo");
+        Item[] items = new Item[] { fact.createItem(-1, 15) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);

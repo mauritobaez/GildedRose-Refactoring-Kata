@@ -1,5 +1,7 @@
 package com.gildedrose.items;
 
+// It would be better to change this class so that it extends to a new BackstagePassItem (as well as Gala) but
+// level 4 says we cannot change this class
 public class BackstagePassesItem extends Item{
     public BackstagePassesItem(String name, int sellIn, int quality) {
         super(name, sellIn, quality);
