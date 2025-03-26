@@ -14,6 +14,11 @@ public abstract class Item {
         this.quality = quality;
     }
 
+    public void update() {
+        updateQuality();
+        updateSellIn();
+    }
+
     public void updateQuality() {
         int count = this.sellIn <= 0? 2 : 1;
         this.quality = Math.max(0, this.quality - count);

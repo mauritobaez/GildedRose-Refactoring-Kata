@@ -18,4 +18,4 @@ That's why we consider it primordial to know when and why different patterns sho
 ## Improvements
 We believe our implementation would be improved by using the Template Method pattern. This would simplify the updating process, as many item classes share the fact that they
 need to update the quality and the sellIn values. Using this pattern will simplify and beautify the code, as, from the outside, you would only need to call the "update" method
-and not the "updateQuality" and "updateSellIn" separately
+and not the "updateQuality" and "updateSellIn" separately. Also, an Item could be able to overwrite the "update" method, should this be needed.
