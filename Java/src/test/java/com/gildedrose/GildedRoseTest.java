@@ -52,7 +52,7 @@ class GildedRoseTest {
 
     @Test
     void testBrie() {
-        Item[] items = new Item[] { new Item("Aged Brie", 30, 30), new Item("foo", 15, 15) };
+        Item[] items = new Item[] { new Item("Aged Brie", 30, 30), new Item("foo", 15, 15), new Item("Aged Brie", 14, 50) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Aged Brie", app.items[0].name);
@@ -61,6 +61,9 @@ class GildedRoseTest {
         assertEquals("foo", app.items[1].name);
         assertEquals(14, app.items[1].quality);
         assertEquals(14, app.items[1].sellIn);
+        assertEquals("Aged Brie", app.items[2].name);
+        assertEquals(50, app.items[2].quality);
+        assertEquals(13, app.items[2].sellIn);
     }
 
     @Test
@@ -80,14 +83,14 @@ class GildedRoseTest {
     }
 
 
-    /*@Test  Not currently implemented
+    @Test
     void testConjured() {
-        Item[] items = new Item[] { new Item("Conjured", 30, 30) };
+        Item[] items = new Item[] { new Item("Conjured Mana Cake", 30, 30) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Conjured", app.items[0].name);
+        assertEquals("Conjured Mana Cake", app.items[0].name);
         assertEquals(28, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
-    }*/
+    }
 
 }

@@ -6,6 +6,8 @@ public class NormalStrategy implements Strategy {
 
     @Override
     public void execute(Item item) {
-
+        int count = item.sellIn <= 0? 2 : 1;
+        item.quality = Math.max(0, item.quality - count);
+        item.sellIn--;
     }
 }

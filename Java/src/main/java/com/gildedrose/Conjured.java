@@ -7,6 +7,8 @@ public class Conjured implements Strategy{
 
     @Override
     public void execute(Item item) {
-
+        int count = item.sellIn <= 0? 4 : 2;
+        item.quality = Math.max(0, item.quality - count);
+        item.sellIn--;
     }
 }

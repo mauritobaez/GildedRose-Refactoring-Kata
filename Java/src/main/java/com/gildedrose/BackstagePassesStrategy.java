@@ -6,6 +6,7 @@ public class BackstagePassesStrategy implements Strategy{
 
     @Override
     public void execute(Item item) {
+        item.sellIn--;
         if (item.sellIn < 0) {
             item.quality = 0;
         } else if (item.sellIn < 5) {
