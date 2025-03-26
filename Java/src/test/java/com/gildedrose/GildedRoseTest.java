@@ -1,7 +1,6 @@
 package com.gildedrose;
 
-import com.gildedrose.factories.Factory;
-import com.gildedrose.factories.RegularFactory;
+import com.gildedrose.factories.*;
 import com.gildedrose.items.*;
 import org.junit.jupiter.api.Test;
 
@@ -9,47 +8,60 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GildedRoseTest {
 
+    public static String REGULAR_NAME = "foo";
+    public static String SULFURAS_NAME = "Sulfuras, Hand of Ragnaros";
+    public static String BRIE_NAME = "Aged Brie";
+    public static String CONJURED_NAME = "Conjured Mana Cake";
+    public static String TAFKA_CONCERT_NAME = "Backstage passes to a TAFKAL80ETC concert";
+    public static String GALA_CONCERT_NAME = "Backstage passes to a GALA concert";
+
     @Test
     void fooOld() {
-        Factory fact = new RegularFactory("foo");
+        Factory fact = new RegularFactory(REGULAR_NAME);
         Item[] items = new Item[] { fact.createItem(0, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("foo", app.items[0].name);
+        assertEquals(REGULAR_NAME, app.items[0].name);
         assertEquals(3, app.items[0].quality);
         assertEquals(-1, app.items[0].sellIn);
     }
 
     @Test
     void fooTooOld() {
-        Factory fact = new RegularFactory("foo");
+        Factory fact = new RegularFactory(REGULAR_NAME);
         Item[] items = new Item[] { fact.createItem(-1, 15) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("foo", app.items[0].name);
+        assertEquals(REGULAR_NAME, app.items[0].name);
         assertEquals(13, app.items[0].quality);
         assertEquals(-2, app.items[0].sellIn);
     }
 
     @Test
     void testSulfuras() {
-        Item[] items = new Item[] { new SulfurasItem("Sulfuras, Hand of Ragnaros", 0, 80) };
+        Factory fact = new SulfurasFactory();
+        Item[] items = new Item[] {fact.createItem(0, 80) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].name);
+        assertEquals(SULFURAS_NAME, app.items[0].name);
         assertEquals(80, app.items[0].quality);
         assertEquals(0, app.items[0].sellIn);
     }
 
     @Test
     void testLegendaryAndNormal() {
-        Item[] items = new Item[] { new SulfurasItem("Sulfuras, Hand of Ragnaros", 0, 80), new RegularItem("foo", 15, 15) };
+        Factory fact = new SulfurasFactory();
+        Factory regFact = new RegularFactory(REGULAR_NAME);
+        Item[] items = new Item[] {
+            fact.createItem( 0, 80),
+            regFact.createItem( 15, 15)
+        };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].name);
+        assertEquals(SULFURAS_NAME, app.items[0].name);
         assertEquals(80, app.items[0].quality);
         assertEquals(0, app.items[0].sellIn);
-        assertEquals("foo", app.items[1].name);
+        assertEquals(REGULAR_NAME, app.items[1].name);
         assertEquals(14, app.items[1].quality);
         assertEquals(14, app.items[1].sellIn);
     }
@@ -57,81 +69,90 @@ class GildedRoseTest {
 
     @Test
     void testBrie() {
-        Item[] items = new Item[] { new AgedBrieItem("Aged Brie", 30, 30), new RegularItem("foo", 15, 15), new AgedBrieItem("Aged Brie", 14, 50) };
+        Factory agedBrieFact = new AgedBrieFactory();
+        Factory regularFact = new RegularFactory(REGULAR_NAME);
+        Item[] items = new Item[] {
+            agedBrieFact.createItem(30, 30),
+            regularFact.createItem( 15, 15),
+            agedBrieFact.createItem( 14, 50)
+        };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Aged Brie", app.items[0].name);
+        assertEquals(BRIE_NAME, app.items[0].name);
         assertEquals(31, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
-        assertEquals("foo", app.items[1].name);
+        assertEquals(REGULAR_NAME, app.items[1].name);
         assertEquals(14, app.items[1].quality);
         assertEquals(14, app.items[1].sellIn);
-        assertEquals("Aged Brie", app.items[2].name);
+        assertEquals(BRIE_NAME, app.items[2].name);
         assertEquals(50, app.items[2].quality);
         assertEquals(13, app.items[2].sellIn);
     }
 
     @Test
     void testBackstage() {
+        Factory fact = new BackstagePassesFactory(Concert.TAFKAL80ETC);
         Item[] items = new Item[] {
-            new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 30, 30),
-            new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 8, 30),
-            new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 3, 30),
-            new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 0, 30),
-            new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", -1, 30),
+            fact.createItem(30, 30),
+            fact.createItem(8, 30),
+            fact.createItem(3, 30),
+            fact.createItem(0, 30),
+            fact.createItem(-1, 30)
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
+        assertEquals(TAFKA_CONCERT_NAME, app.items[0].name);
         assertEquals(31, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[1].name);
+        assertEquals(TAFKA_CONCERT_NAME, app.items[1].name);
         assertEquals(32, app.items[1].quality);
         assertEquals(7, app.items[1].sellIn);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[2].name);
+        assertEquals(TAFKA_CONCERT_NAME, app.items[2].name);
         assertEquals(33, app.items[2].quality);
         assertEquals(2, app.items[2].sellIn);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[3].name);
+        assertEquals(TAFKA_CONCERT_NAME, app.items[3].name);
         assertEquals(33, app.items[3].quality);
         assertEquals(-1, app.items[3].sellIn);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[4].name);
+        assertEquals(TAFKA_CONCERT_NAME, app.items[4].name);
         assertEquals(0, app.items[4].quality);
         assertEquals(-2, app.items[4].sellIn);
     }
 
     @Test
     void testBackstageGala() {
+        Factory fact = new BackstagePassesFactory(Concert.GALA);
         Item[] items = new Item[] {
-            new BackstagePassesGalaItem("Backstage passes to a GALA concert", 30, 30),
-            new BackstagePassesGalaItem("Backstage passes to a GALA concert", 8, 30),
-            new BackstagePassesGalaItem("Backstage passes to a GALA concert", 3, 30),
-            new BackstagePassesGalaItem("Backstage passes to a GALA concert", 0, 30),
-            new BackstagePassesGalaItem("Backstage passes to a GALA concert", -1, 30)};
+            fact.createItem(30, 30),
+            fact.createItem(8, 30),
+            fact.createItem(3, 30),
+            fact.createItem(0, 30),
+            fact.createItem(-1, 30)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Backstage passes to a GALA concert", app.items[0].name);
+        assertEquals(GALA_CONCERT_NAME, app.items[0].name);
         assertEquals(32, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
-        assertEquals("Backstage passes to a GALA concert", app.items[1].name);
+        assertEquals(GALA_CONCERT_NAME, app.items[1].name);
         assertEquals(33, app.items[1].quality);
         assertEquals(7, app.items[1].sellIn);
-        assertEquals("Backstage passes to a GALA concert", app.items[2].name);
+        assertEquals(GALA_CONCERT_NAME, app.items[2].name);
         assertEquals(34, app.items[2].quality);
         assertEquals(2, app.items[2].sellIn);
-        assertEquals("Backstage passes to a GALA concert", app.items[3].name);
+        assertEquals(GALA_CONCERT_NAME, app.items[3].name);
         assertEquals(34, app.items[3].quality);
         assertEquals(-1, app.items[3].sellIn);
-        assertEquals("Backstage passes to a GALA concert", app.items[4].name);
+        assertEquals(GALA_CONCERT_NAME, app.items[4].name);
         assertEquals(0, app.items[4].quality);
         assertEquals(-2, app.items[4].sellIn);
     }
 
     @Test
     void testConjured() {
-        Item[] items = new Item[] { new ConjuredItem("Conjured Mana Cake", 30, 30) };
+        Factory fact = new ConjuredFactory();
+        Item[] items = new Item[] { fact.createItem( 30, 30) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("Conjured Mana Cake", app.items[0].name);
+        assertEquals(CONJURED_NAME, app.items[0].name);
         assertEquals(28, app.items[0].quality);
         assertEquals(29, app.items[0].sellIn);
     }
