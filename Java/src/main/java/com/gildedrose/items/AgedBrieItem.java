@@ -6,7 +6,7 @@ public class AgedBrieItem extends Item {
     }
 
     @Override
-    public void UpdateQuality() {
+    public void updateQuality() {
         this.quality = Math.min(50, this.quality+1);
     }
 }

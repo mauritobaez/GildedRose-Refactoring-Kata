@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-import com.gildedrose.items.Item;
+import com.gildedrose.items.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +9,7 @@ class GildedRoseTest {
 
     @Test
     void fooOld() {
-        Item[] items = new Item[] { new Item("foo", 0, 5) };
+        Item[] items = new Item[] { new RegularItem("foo", 0, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
@@ -19,7 +19,7 @@ class GildedRoseTest {
 
     @Test
     void fooTooOld() {
-        Item[] items = new Item[] { new Item("foo", -1, 15) };
+        Item[] items = new Item[] { new RegularItem("foo", -1, 15) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
@@ -29,7 +29,7 @@ class GildedRoseTest {
 
     @Test
     void testSulfuras() {
-        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 0, 80) };
+        Item[] items = new Item[] { new SulfurasItem("Sulfuras, Hand of Ragnaros", 0, 80) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].name);
@@ -39,7 +39,7 @@ class GildedRoseTest {
 
     @Test
     void testLegendaryAndNormal() {
-        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 0, 80), new Item("foo", 15, 15) };
+        Item[] items = new Item[] { new SulfurasItem("Sulfuras, Hand of Ragnaros", 0, 80), new RegularItem("foo", 15, 15) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].name);
@@ -53,7 +53,7 @@ class GildedRoseTest {
 
     @Test
     void testBrie() {
-        Item[] items = new Item[] { new Item("Aged Brie", 30, 30), new Item("foo", 15, 15), new Item("Aged Brie", 14, 50) };
+        Item[] items = new Item[] { new AgedBrieItem("Aged Brie", 30, 30), new RegularItem("foo", 15, 15), new AgedBrieItem("Aged Brie", 14, 50) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Aged Brie", app.items[0].name);
@@ -69,7 +69,7 @@ class GildedRoseTest {
 
     @Test
     void testBackstage() {
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 30, 30), new Item("Backstage passes to a TAFKAL80ETC concert", 8, 30), new Item("Backstage passes to a TAFKAL80ETC concert", 3, 30) };
+        Item[] items = new Item[] { new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 30, 30), new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 8, 30), new BackstagePassesItem("Backstage passes to a TAFKAL80ETC concert", 3, 30) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
@@ -86,7 +86,7 @@ class GildedRoseTest {
 
     @Test
     void testConjured() {
-        Item[] items = new Item[] { new Item("Conjured Mana Cake", 30, 30) };
+        Item[] items = new Item[] { new ConjuredItem("Conjured Mana Cake", 30, 30) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Conjured Mana Cake", app.items[0].name);

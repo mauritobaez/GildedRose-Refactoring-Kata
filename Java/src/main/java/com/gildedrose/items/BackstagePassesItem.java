@@ -6,7 +6,7 @@ public class BackstagePassesItem extends Item{
     }
 
     @Override
-    public void UpdateQuality() {
+    public void updateQuality() {
         if (this.sellIn <= 0) {
             this.quality = 0;
         } else if (this.sellIn <= 5) {
