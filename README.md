@@ -2,6 +2,8 @@
 
 Group 8: Mauro Baez and Matias Manzur
 
+You can find a specific branch with every level or just look at the main branch commit history.
+
 ## Some thoughts
 Throughout the workshop we were thinking that we should refactor following the SOLID principles as much as possible.
 For instance, when creating the different items, we were considering how easy it would be to create a new item in the future without changing existing ones.
