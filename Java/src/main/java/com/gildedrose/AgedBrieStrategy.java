@@ -7,6 +7,7 @@ public class AgedBrieStrategy implements Strategy {
 
     @Override
     public void execute(Item item) {
-
+        item.quality = Math.min(50, item.quality+1);
+        item.sellIn--;
     }
 }
